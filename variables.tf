@@ -16,3 +16,6 @@ variable "nat_ami" {}
 variable "ecs_instance_type" {}
 variable "ecs_instance_ami" {}
 variable "ecs_cluster_name" {}
+
+variable "tasks_instance_ami" {}
+variable "tasks_instance_type" {}

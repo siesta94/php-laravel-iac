@@ -23,8 +23,8 @@ nat_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDemnr2xX04pALMOb+8j8f2nUOmZR6RF
 nat_instance_type = "t3.medium"
 nat_ami           = "ami-00a9d4a05375b2763"
 
-#tasks_instance_type = "t3.medium"
-#task_instance_ami = ""
+tasks_instance_type = "t3.medium"
+tasks_instance_ami = "ami-0915bcb5fa77e4892"
 
 ecs_instance_type = "t3.medium"
 ecs_instance_ami  = "ami-00a9d4a05375b2763"

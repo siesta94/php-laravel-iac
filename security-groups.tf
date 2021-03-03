@@ -28,8 +28,8 @@ resource "aws_security_group" "pm4_dmz_sg" {
 
   ingress {
     from_port = 0
-    to_port   = 65535
-    protocol  = "all"
+    to_port   = 0
+    protocol  = "-1"
 
     security_groups = [aws_security_group.pm4_tasks_sg.id, aws_security_group.pm4_web_sg.id]
     #cidr_blocks = ["0.0.0.0/0"]
@@ -104,8 +104,8 @@ resource "aws_security_group" "pm4_web_sg" {
 
   ingress {
     from_port = 0
-    to_port   = 65535
-    protocol  = "all"
+    to_port   = 0
+    protocol  = "-1"
 
     security_groups = [aws_security_group.pm4_alb_sg.id]
     #cidr_blocks = ["0.0.0.0/0"]
