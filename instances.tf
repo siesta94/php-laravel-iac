@@ -34,6 +34,11 @@ resource "aws_instance" "pm4_nat_instance_a" {
   }
 }
 
+resource "aws_network_interface_sg_attachment" "sg_attachment" {
+  security_group_id    = aws_security_group.pm4_dmz_sg.id
+  network_interface_id = aws_instance.pm4_nat_instance_a.primary_network_interface_id
+}
+
 resource "aws_instance" "pm4_nat_instance_b" {
   ami           = var.nat_ami
   instance_type = var.nat_instance_type
@@ -46,6 +51,11 @@ resource "aws_instance" "pm4_nat_instance_b" {
   tags = {
     Name = "PM4-NAT-Instance-B"
   }
+}
+
+resource "aws_network_interface_sg_attachment" "sg_attachment_b" {
+  security_group_id    = aws_security_group.pm4_dmz_sg.id
+  network_interface_id = aws_instance.pm4_nat_instance_b.primary_network_interface_id
 }
 
 resource "aws_eip" "nat_eip_a" {
@@ -66,38 +76,3 @@ resource "aws_key_pair" "pm4_nat_key" {
     Name = "PM4-Client-NAT-Key"
   }
 }
-
-
-# Testing Subnets #
-#
-#resource "aws_network_interface" "pm4_test_interface" {
-#  subnet_id         = aws_subnet.pm4_frontend_a.id
-#  tags = {
-#    Name = "PM4-Test-Network-Interface"
-#  }
-#}
-
-
-#resource "aws_instance" "pm4_test_instance" {
-#  ami           = var.nat_ami
-#  instance_type = var.nat_instance_type
-#  key_name      = aws_key_pair.pm4_nat_key.id
-#  network_interface {
-#    network_interface_id = aws_network_interface.pm4_test_interface.id
-#    device_index         = 0
-#  }
-
-#  tags = {
-#    Name = "PM4-Test-Instance-A"
-#  }
-#}
-
-
-
-
-
-
-
-
-
-

@@ -24,9 +24,9 @@ nat_instance_type = "t3.medium"
 nat_ami           = "ami-00a9d4a05375b2763"
 
 tasks_instance_type = "t3.medium"
-tasks_instance_ami = "ami-0915bcb5fa77e4892"
+tasks_instance_ami  = "ami-0915bcb5fa77e4892"
 
 ecs_instance_type = "t3.medium"
-ecs_instance_ami  = "ami-00a9d4a05375b2763"
+ecs_instance_ami  = "ami-0451d0b6be4c0428d"
 ecs_cluster_name  = "PM4-Client-ECS-Cluster"
 
