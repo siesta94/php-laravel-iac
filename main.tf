@@ -20,11 +20,11 @@ module "compute" {
     pm4_backend_a  = "10.0.15.0/24"
     pm4_backend_b  = "10.0.16.0/24"
   }
-  nat_ami = "ami-00a9d4a05375b2763" 
-  nat_instance_type = "t3.medium"
-  nat_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDemnr2xX04pALMOb+8j8f2nUOmZR6RFsvIGQk0H1AFaGWZap8LDfS5Quwvr0+I8JcAct1JYddLO9QOqD+XiI1Lvyf0v0O8ft/4eb8a7wk6B2IXLXE+JY32YwCDdDlmHDOsIU3kSUgtnXWbKCR8QQgINao1uwsjkdzGllVaEtQdlcKVUwRIpzV8XEdHgwu30s+PFf8kQK368GVG+QGDlwHKOm9bHWafSQlta3mYbZIHPbEAzNXj5c3YlCAFmghr8BvGtbi+IRd6B5ced7xHhSkueZNbA4b1G5gsKHjsa0bh6uTXxkzTnVH/nkotCCoJ94WeEwHy/4M4Y7r55HtHPw0D root@ip-172-16-51-6.ec2.internal"
-  ecs_instance_ami = "ami-056807e883f197989"
-  ecs_instance_type = "t3.medium" 
-  tasks_instance_ami = "ami-0742b4e673072066f"
+  nat_ami             = "ami-00a9d4a05375b2763"
+  nat_instance_type   = "t3.medium"
+  nat_key             = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDemnr2xX04pALMOb+8j8f2nUOmZR6RFsvIGQk0H1AFaGWZap8LDfS5Quwvr0+I8JcAct1JYddLO9QOqD+XiI1Lvyf0v0O8ft/4eb8a7wk6B2IXLXE+JY32YwCDdDlmHDOsIU3kSUgtnXWbKCR8QQgINao1uwsjkdzGllVaEtQdlcKVUwRIpzV8XEdHgwu30s+PFf8kQK368GVG+QGDlwHKOm9bHWafSQlta3mYbZIHPbEAzNXj5c3YlCAFmghr8BvGtbi+IRd6B5ced7xHhSkueZNbA4b1G5gsKHjsa0bh6uTXxkzTnVH/nkotCCoJ94WeEwHy/4M4Y7r55HtHPw0D root@ip-172-16-51-6.ec2.internal"
+  ecs_instance_ami    = "ami-056807e883f197989"
+  ecs_instance_type   = "t3.medium"
+  tasks_instance_ami  = "ami-0742b4e673072066f"
   tasks_instance_type = "t3.medium"
 }

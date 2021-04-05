@@ -1,6 +1,6 @@
-###################
+####################
 #CREATE ECS CLUSTER#
-###################
+####################
 
 resource "aws_ecs_capacity_provider" "pm4-ecs-cap" {
   name = "Default-Capacity"
