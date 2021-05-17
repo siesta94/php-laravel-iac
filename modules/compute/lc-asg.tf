@@ -4,9 +4,11 @@ resource "aws_launch_configuration" "ecs_lc" {
   name            = "PM4-Client-ECS-Web"
   image_id        = var.ecs_instance_ami
   instance_type   = var.ecs_instance_type
+  iam_instance_profile = aws_iam_instance_profile.ecs_ec2_role.name
   security_groups = [aws_security_group.pm4_web_sg.id]
   key_name        = aws_key_pair.pm4_nat_key.id
   #user_data       = file("userdata")
+  user_data = "#!/bin/bash\necho ECS_CLUSTER=PM4-Client-ECS >> /etc/ecs/ecs.config"
 
   lifecycle {
     create_before_destroy = true

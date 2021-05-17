@@ -13,7 +13,6 @@ resource "aws_security_group" "pm4_redis_sg" {
     protocol  = "tcp"
 
     security_groups = [aws_security_group.pm4_tasks_sg.id, aws_security_group.pm4_web_sg.id]
-    #cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -32,13 +31,19 @@ resource "aws_security_group" "pm4_dmz_sg" {
     protocol  = "-1"
 
     security_groups = [aws_security_group.pm4_tasks_sg.id, aws_security_group.pm4_web_sg.id]
-    #cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
     from_port = 22
     to_port   = 22
     protocol  = "tcp"
 
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -59,7 +64,6 @@ resource "aws_security_group" "pm4_efs_sg" {
     protocol  = "tcp"
 
     security_groups = [aws_security_group.pm4_tasks_sg.id, aws_security_group.pm4_web_sg.id]
-    #cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -73,13 +77,11 @@ resource "aws_security_group" "pm4_tasks_sg" {
   description = "Allowing SSH"
   vpc_id      = aws_vpc.pm4_client_vpc.id
 
-  ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
-
-    #security_groups = ["aws_security_group.pm4_dmz_sg.id"]
-    cidr_blocks = [var.cidrs["pm4_dmz_b"], var.cidrs["pm4_dmz_a"]]
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -88,35 +90,24 @@ resource "aws_security_group" "pm4_tasks_sg" {
 
 }
 
+resource "aws_security_group_rule" "dmz-sg-add-tasks" {
+  type                     = "ingress"
+  from_port                = 22
+  to_port                  = 22
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.pm4_dmz_sg.id
+  security_group_id        = aws_security_group.pm4_tasks_sg.id
+}
+
 resource "aws_security_group" "pm4_web_sg" {
   name        = "pm4_web_sg"
   description = "Allowing SSH for DMZ and HTTP/S ports for ALB as all traffic too"
   vpc_id      = aws_vpc.pm4_client_vpc.id
 
-  ingress {
-    from_port = 22
-    to_port   = 22
-    protocol  = "tcp"
-
-    # Allow Traffic from DMZ group?#
-    cidr_blocks = [var.cidrs["pm4_dmz_b"], var.cidrs["pm4_dmz_a"]]
-  }
-
-  ingress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
-
-    security_groups = [aws_security_group.pm4_alb_sg.id]
-    #cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port = 80
-    to_port   = 80
-    protocol  = "tcp"
-
-    #security_groups = [aws_security_group.pm4_alb_sg.id, aws_security_group.pm4_tasks_sg.id]
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
@@ -124,6 +115,24 @@ resource "aws_security_group" "pm4_web_sg" {
     Name = "PM4-Web-SG"
   }
 
+}
+
+resource "aws_security_group_rule" "dmz-sg-add-web" {
+  type                     = "ingress"
+  from_port                = 22
+  to_port                  = 22
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.pm4_dmz_sg.id
+  security_group_id        = aws_security_group.pm4_web_sg.id
+}
+
+resource "aws_security_group_rule" "dmz-sg-add-alb" {
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 0
+  protocol                 = "-1"
+  source_security_group_id = aws_security_group.pm4_alb_sg.id
+  security_group_id        = aws_security_group.pm4_web_sg.id
 }
 
 resource "aws_security_group" "pm4_alb_sg" {
@@ -164,7 +173,6 @@ resource "aws_security_group" "pm4_backend_sg" {
     protocol  = "tcp"
 
     security_groups = [aws_security_group.pm4_web_sg.id, aws_security_group.pm4_tasks_sg.id]
-    #cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {

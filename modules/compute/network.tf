@@ -55,25 +55,25 @@ resource "aws_subnet" "pm4_dmz_b" {
   }
 }
 
-resource "aws_subnet" "pm4_frontend_a" {
-  availability_zone = element(data.aws_availability_zones.pm4_client_azs.names, 0)
-  vpc_id            = aws_vpc.pm4_client_vpc.id
-  cidr_block        = var.cidrs["pm4_frontend_a"]
+#resource "aws_subnet" "pm4_frontend_a" {
+#  availability_zone = element(data.aws_availability_zones.pm4_client_azs.names, 0)
+#  vpc_id            = aws_vpc.pm4_client_vpc.id
+#  cidr_block        = var.cidrs["pm4_frontend_a"]
+#
+#  tags = {
+#    Name = "PM4-Client-FrontEnd-Subnet-A"
+#  }
+#}
 
-  tags = {
-    Name = "PM4-Client-FrontEnd-Subnet-A"
-  }
-}
-
-resource "aws_subnet" "pm4_frontend_b" {
-  availability_zone = element(data.aws_availability_zones.pm4_client_azs.names, 1)
-  vpc_id            = aws_vpc.pm4_client_vpc.id
-  cidr_block        = var.cidrs["pm4_frontend_b"]
-
-  tags = {
-    Name = "PM4-Client-FrontEnd-Subnet-B"
-  }
-}
+#resource "aws_subnet" "pm4_frontend_b" {
+#  availability_zone = element(data.aws_availability_zones.pm4_client_azs.names, 1)
+#  vpc_id            = aws_vpc.pm4_client_vpc.id
+#  cidr_block        = var.cidrs["pm4_frontend_b"]
+#
+#  tags = {
+#    Name = "PM4-Client-FrontEnd-Subnet-B"
+#  }
+#}
 
 resource "aws_subnet" "pm4_efs_a" {
   availability_zone = element(data.aws_availability_zones.pm4_client_azs.names, 0)
@@ -211,25 +211,25 @@ resource "aws_route_table" "pm4_dmz_rt" {
   }
 }
 
-resource "aws_route_table" "pm4_frontend_a" {
+resource "aws_route_table" "pm4_web_a" {
   vpc_id = aws_vpc.pm4_client_vpc.id
   route {
     cidr_block           = "0.0.0.0/0"
     network_interface_id = aws_network_interface.pm4_nat_interface_a.id
   }
   tags = {
-    Name = "PM4-FrontEnd-Route-A"
+    Name = "PM4-NAT-Route-A"
   }
 }
 
-resource "aws_route_table" "pm4_frontend_b" {
+resource "aws_route_table" "pm4_web_b" {
   vpc_id = aws_vpc.pm4_client_vpc.id
   route {
     cidr_block           = "0.0.0.0/0"
     network_interface_id = aws_network_interface.pm4_nat_interface_b.id
   }
   tags = {
-    Name = "PM4-FrontEnd-Route-B"
+    Name = "PM4-NAT-Route-B"
   }
 }
 
