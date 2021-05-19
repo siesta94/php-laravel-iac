@@ -69,7 +69,6 @@ resource "aws_security_group" "pm4_efs_sg" {
   tags = {
     Name = "PM4-EFS-SG"
   }
-
 }
 
 resource "aws_security_group" "pm4_tasks_sg" {
@@ -87,7 +86,6 @@ resource "aws_security_group" "pm4_tasks_sg" {
   tags = {
     Name = "PM4-Tasks-SG"
   }
-
 }
 
 resource "aws_security_group_rule" "dmz-sg-add-tasks" {
@@ -178,5 +176,4 @@ resource "aws_security_group" "pm4_backend_sg" {
   tags = {
     Name = "PM4-BackEnd-SG"
   }
-
 }
