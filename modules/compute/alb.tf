@@ -1,5 +1,5 @@
 resource "aws_lb" "pm4_alb" {
-  name               = "test-lb-tf"
+  name               = "PM4-${var.pm4_client_name}-ALB"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.pm4_alb_sg.id]
@@ -14,7 +14,7 @@ resource "aws_lb" "pm4_alb" {
   #}
 
   tags = {
-    Name = "PM4-Client-ALB"
+    Name = "PM4-${var.pm4_client_name}-ALB"
   }
 }
 

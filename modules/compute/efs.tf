@@ -3,7 +3,7 @@ resource "aws_efs_file_system" "fs_efs" {
   performance_mode = "generalPurpose"
 
   tags = {
-    Name = "PM4-Client-EFS"
+    Name = "PM4-${var.pm4_client_name}-EFS"
   }
 }
 
@@ -19,9 +19,9 @@ resource "aws_efs_mount_target" "fs_efs_mount_b" {
   security_groups = [aws_security_group.pm4_efs_sg.id]
 }
 
-data "template_file" "userdata" {
-  template = file("./ud_mount.tpl")
-  vars = {
-	efs_id           = aws_efs_file_system.fs_efs.dns_name
-  }  
-}
+#data "template_file" "userdata" {
+#  template = file("./ud_mount.tpl")
+#  vars = {
+#	efs_id           = aws_efs_file_system.fs_efs.dns_name
+#  }  
+#}

@@ -7,7 +7,7 @@ resource "aws_network_interface" "pm4_nat_interface_a" {
   source_dest_check = false
 
   tags = {
-    Name = "PM4-NAT-Network-Interface-A"
+    Name = "PM4-NAT-${var.pm4_client_name}-ENI-A"
   }
 }
 
@@ -15,7 +15,7 @@ resource "aws_network_interface" "pm4_nat_interface_b" {
   subnet_id         = aws_subnet.pm4_dmz_b.id
   source_dest_check = false
   tags = {
-    Name = "PM4-NAT-Network-Interface-B"
+    Name = "PM4-NAT-${var.pm4_client_name}-ENI-B"
   }
 }
 
@@ -30,7 +30,7 @@ resource "aws_instance" "pm4_nat_instance_a" {
   }
 
   tags = {
-    Name = "PM4-NAT-Instance-A"
+    Name = "PM4-${var.pm4_client_name}-NAT-Instance-A"
   }
 }
 
@@ -49,7 +49,7 @@ resource "aws_instance" "pm4_nat_instance_b" {
   }
 
   tags = {
-    Name = "PM4-NAT-Instance-B"
+    Name = "PM4-${var.pm4_client_name}-NAT-Instance-A"
   }
 }
 
@@ -73,6 +73,6 @@ resource "aws_key_pair" "pm4_nat_key" {
   public_key = var.nat_key
 
   tags = {
-    Name = "PM4-Client-NAT-Key"
+    Name = "PM4-${var.pm4_client_name}-NAT-Key"
   }
 }

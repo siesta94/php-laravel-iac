@@ -3,7 +3,7 @@
 ###################
 
 resource "aws_security_group" "pm4_redis_sg" {
-  name        = "pm4_redis_sg"
+  name        = "pm4-${var.pm4_client_name}-redis-sg"
   description = "Allowing connection from Tasks and Web"
   vpc_id      = aws_vpc.pm4_client_vpc.id
 
@@ -16,12 +16,12 @@ resource "aws_security_group" "pm4_redis_sg" {
   }
 
   tags = {
-    Name = "PM4-Redis-SG"
+    Name = "PM4-${var.pm4_client_name}-Redis-SG"
   }
 }
 
 resource "aws_security_group" "pm4_dmz_sg" {
-  name        = "pm4_dmz_sg"
+  name        = "pm4-${var.pm4_client_name}-dmz-sg"
   description = "Allowing all traffic from Tasks and Web"
   vpc_id      = aws_vpc.pm4_client_vpc.id
 
@@ -48,13 +48,13 @@ resource "aws_security_group" "pm4_dmz_sg" {
   }
 
   tags = {
-    Name = "PM4-DMZ-SG"
+    Name = "PM4-${var.pm4_client_name}-DMZ-SG"
   }
 
 }
 
 resource "aws_security_group" "pm4_efs_sg" {
-  name        = "pm4_efs_sg"
+  name        = "pm4-${var.pm4_client_name}-efs-sg"
   description = "Allowing NFS port for EFS for Tasks and Web"
   vpc_id      = aws_vpc.pm4_client_vpc.id
 
@@ -67,12 +67,12 @@ resource "aws_security_group" "pm4_efs_sg" {
   }
 
   tags = {
-    Name = "PM4-EFS-SG"
+    Name = "PM4-${var.pm4_client_name}-EFS-SG"
   }
 }
 
 resource "aws_security_group" "pm4_tasks_sg" {
-  name        = "pm4_tasks_sg"
+  name        = "pm4-${var.pm4_client_name}-tasks-sg"
   description = "Allowing SSH"
   vpc_id      = aws_vpc.pm4_client_vpc.id
 
@@ -84,7 +84,7 @@ resource "aws_security_group" "pm4_tasks_sg" {
   }
 
   tags = {
-    Name = "PM4-Tasks-SG"
+    Name = "PM4-${var.pm4_client_name}-Tasks-SG"
   }
 }
 
@@ -98,7 +98,7 @@ resource "aws_security_group_rule" "dmz-sg-add-tasks" {
 }
 
 resource "aws_security_group" "pm4_web_sg" {
-  name        = "pm4_web_sg"
+  name        = "pm4-${var.pm4_client_name}-web-sg"
   description = "Allowing SSH for DMZ and HTTP/S ports for ALB as all traffic too"
   vpc_id      = aws_vpc.pm4_client_vpc.id
 
@@ -110,7 +110,7 @@ resource "aws_security_group" "pm4_web_sg" {
   }
 
   tags = {
-    Name = "PM4-Web-SG"
+    Name = "PM4-${var.pm4_client_name}-Web-SG"
   }
 
 }
@@ -134,7 +134,7 @@ resource "aws_security_group_rule" "dmz-sg-add-alb" {
 }
 
 resource "aws_security_group" "pm4_alb_sg" {
-  name        = "pm4_alb_sg"
+  name        = "pm4-${var.pm4_client_name}-alb-sg"
   description = "Allow HTTP/S on ALB"
   vpc_id      = aws_vpc.pm4_client_vpc.id
 
@@ -155,13 +155,12 @@ resource "aws_security_group" "pm4_alb_sg" {
   }
 
   tags = {
-    Name = "PM4-ALB-SG"
+    Name = "PM4-${var.pm4_client_name}-ALB-SG"
   }
-
 }
 
 resource "aws_security_group" "pm4_backend_sg" {
-  name        = "pm4_backend_sg"
+  name        = "pm4-${var.pm4_client_name}-backend-sg"
   description = "Allowing MySQL port for Tasks and Web"
   vpc_id      = aws_vpc.pm4_client_vpc.id
 
@@ -174,6 +173,6 @@ resource "aws_security_group" "pm4_backend_sg" {
   }
 
   tags = {
-    Name = "PM4-BackEnd-SG"
+    Name = "PM4-${var.pm4_client_name}-BackEnd-SG"
   }
 }

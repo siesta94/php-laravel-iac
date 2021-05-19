@@ -1,6 +1,7 @@
 module "compute" {
   source = "./modules/compute"
 
+  pm4_client_name = "example"
   vpc_cidr = "10.0.0.0/16"
   cidrs = {
     pm4_dmz_a      = "10.0.1.0/24"
@@ -27,4 +28,5 @@ module "compute" {
   ecs_instance_type   = "t3.medium"
   tasks_instance_ami  = "ami-0742b4e673072066f"
   tasks_instance_type = "t3.medium"
+  rds_instance_type = "db.t3.small"
 }
