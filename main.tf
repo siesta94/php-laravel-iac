@@ -30,3 +30,16 @@ module "compute" {
   tasks_instance_type = "t3.medium"
   rds_instance_type = "db.t3.small"
 }
+
+module "app" {
+  source = "./modules/app"
+
+  pm4_ecs_cluster = module.compute.pm4_ecs_cluster
+  pm4_web_subnet_a = module.compute.pm4_web_subnet_a
+  pm4_web_subnet_b = module.compute.pm4_web_subnet_b
+  pm4_web_sg = module.compute.pm4_web_sg
+  fs_efs = module.compute.fs_efs
+  pm4_alb = module.compute.pm4_alb
+  stm_tg = module.compute.stm_tg
+  pm4_secure_listener = module.compute.pm4_secure_listener
+}

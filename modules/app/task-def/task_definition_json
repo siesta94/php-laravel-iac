@@ -1,0 +1,30 @@
+[
+  {
+      "name": "openapi-ecs-container",
+     "image": "nginx:latest", 
+      "cpu": 10,
+      "memory": 512,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "openapi-devl-cw",
+          "awslogs-region": "eu-west-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "links": [],
+      "portMappings": [
+          { 
+              "hostPort": 8080,
+              "containerPort": 8080,
+              "protocol": "tcp"
+          }
+      ],
+      "essential": true,
+      "entryPoint": [],
+      "command": [],
+      "environment": [],
+      "mountPoints": [],
+      "volumesFrom": []
+  }
+]

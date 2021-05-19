@@ -18,6 +18,13 @@ resource "aws_lb" "pm4_alb" {
   }
 }
 
+resource "aws_lb_target_group" "stm_tg" {
+  name     = "PM4-${var.pm4_client_name}-STM-TG"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.pm4_client_vpc.id
+}
+
 resource "aws_lb_listener" "pm4_unsecure_listener" {
   load_balancer_arn = aws_lb.pm4_alb.arn
   port              = "80"
