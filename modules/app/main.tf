@@ -1,33 +1,27 @@
-resource "aws_ecs_task_definition" "task_definition" {
-  container_definitions    = "${data.template_file.task_definition_json.rendered}"
-  #execution_role_arn       = "EcsTaskExecutionRole"
-  family                   = "openapi-task-defination"                                                                     
-  network_mode             = "awsvpc"                                                                                     
-  memory                   = "2048"
-  cpu                      = "1024"
-  requires_compatibilities = ["EC2"]                                  
-  #task_role_arn            = "EcsTaskExecutionRole"                                                                  
-} 
+resource "aws_ecs_task_definition" "stm_task_definition" {
+  family             = "stm-app"
+  execution_role_arn = aws_iam_role.ecs_task_execution_role.arn
 
-data "template_file" "task_definition_json" {
-  template = file("${path.module}/task-def/task_definition_json")
+  container_definitions = data.template_file.stm_td.rendered
+  tags = {
+    Environment = "prod"
+    Application = "${var.pm4_client_name}-stm-app"
+  }
 }
 
-resource "aws_ecs_service" "service" {
-  cluster                = var.pm4_ecs_cluster.id
-  desired_count          = 1                                                       
-  launch_type            = "EC2"                                                     
-  name                   = "nginx-service"
-  task_definition        = aws_ecs_task_definition.task_definition.arn
+resource "aws_ecs_service" "stm_service" {
+  name            = "${var.pm4_client_name}-stm-app"
+  cluster         = var.pm4_ecs_cluster.id
+  task_definition = aws_ecs_task_definition.stm_task_definition.arn
+  desired_count   = 1
+
   load_balancer {
-    container_name       = "nginx"
-    container_port       = "8080"
-    target_group_arn     = var.stm_tg.arn
+    target_group_arn = var.stm_tg.arn
+    container_name   = "stm-app"
+    container_port   = 80
   }
-  network_configuration {
-    security_groups       = [var.pm4_web_sg.id]
-    subnets               = [var.pm4_web_subnet_a.id, var.pm4_web_subnet_b.id]
-    assign_public_ip      = "false"
-  }
-  #depends_on              = var.pm4_secure_listener
+}
+
+data "template_file" "stm_td" {
+  template = file("./modules/app/task-def/task_definition.json")
 }

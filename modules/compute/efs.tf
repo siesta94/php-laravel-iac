@@ -1,5 +1,5 @@
 resource "aws_efs_file_system" "fs_efs" {
-  creation_token = "efs-file-system"
+  creation_token   = "efs-file-system"
   performance_mode = "generalPurpose"
 
   tags = {
@@ -18,10 +18,3 @@ resource "aws_efs_mount_target" "fs_efs_mount_b" {
   subnet_id       = aws_subnet.pm4_efs_b.id
   security_groups = [aws_security_group.pm4_efs_sg.id]
 }
-
-#data "template_file" "userdata" {
-#  template = file("./ud_mount.tpl")
-#  vars = {
-#	efs_id           = aws_efs_file_system.fs_efs.dns_name
-#  }  
-#}

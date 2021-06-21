@@ -1,6 +1,6 @@
-######################
-# NAT Instances      #
-######################
+###################################
+# NAT Instances and it's resources#
+###################################
 
 resource "aws_network_interface" "pm4_nat_interface_a" {
   subnet_id         = aws_subnet.pm4_dmz_a.id
@@ -49,7 +49,7 @@ resource "aws_instance" "pm4_nat_instance_b" {
   }
 
   tags = {
-    Name = "PM4-${var.pm4_client_name}-NAT-Instance-A"
+    Name = "PM4-${var.pm4_client_name}-NAT-Instance-B"
   }
 }
 
@@ -68,11 +68,24 @@ resource "aws_eip" "nat_eip_b" {
   network_interface = aws_network_interface.pm4_nat_interface_b.id
 }
 
-resource "aws_key_pair" "pm4_nat_key" {
-  key_name   = "pm4_nat_key"
-  public_key = var.nat_key
+##################################################
+#Generate and write in file key for NAT instances#
+##################################################
 
-  tags = {
-    Name = "PM4-${var.pm4_client_name}-NAT-Key"
-  }
-}
+#resource "tls_private_key" "nat_key" {
+#  algorithm = "RSA"
+#}
+
+#resource "aws_key_pair" "pm4_nat_key" {
+#  key_name   = "pm4_nat_key"
+  #public_key = var.nat_key
+#  public_key = tls_private_key.nat_key.public_key_openssh
+#
+#  provisioner "local-exec" { # Create "myKey.pem" to your computer!!
+#    command = "echo '${tls_private_key.nat_key.private_key_pem}' > ./nat_key.pem"
+#  }
+
+#  tags = {
+#    Name = "PM4-${var.pm4_client_name}-NAT-Key"
+#  }
+#}

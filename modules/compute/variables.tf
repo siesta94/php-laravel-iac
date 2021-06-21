@@ -11,3 +11,14 @@ variable "ecs_instance_type" {}
 variable "tasks_instance_ami" {}
 variable "tasks_instance_type" {}
 variable "rds_instance_type" {}
+variable "stm_service" {}
+
+#variable "rdsusername" {
+#  description = "RDS Username (usually RDSProdMaster)"
+#  type = string
+#}
+
+#variable "rdspassword" {
+#  description = "RDS Password"
+#  type = string
+#}

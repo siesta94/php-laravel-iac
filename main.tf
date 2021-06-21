@@ -2,7 +2,7 @@ module "compute" {
   source = "./modules/compute"
 
   pm4_client_name = "example"
-  vpc_cidr = "10.0.0.0/16"
+  vpc_cidr        = "10.0.0.0/16"
   cidrs = {
     pm4_dmz_a      = "10.0.1.0/24"
     pm4_dmz_b      = "10.0.2.0/24"
@@ -28,18 +28,20 @@ module "compute" {
   ecs_instance_type   = "t3.medium"
   tasks_instance_ami  = "ami-0742b4e673072066f"
   tasks_instance_type = "t3.medium"
-  rds_instance_type = "db.t3.small"
+  rds_instance_type   = "db.t3.small"
+  stm_service = module.app.stm_service
 }
 
 module "app" {
   source = "./modules/app"
 
-  pm4_ecs_cluster = module.compute.pm4_ecs_cluster
-  pm4_web_subnet_a = module.compute.pm4_web_subnet_a
-  pm4_web_subnet_b = module.compute.pm4_web_subnet_b
-  pm4_web_sg = module.compute.pm4_web_sg
-  fs_efs = module.compute.fs_efs
-  pm4_alb = module.compute.pm4_alb
-  stm_tg = module.compute.stm_tg
+  pm4_client_name = "example"
+  pm4_ecs_cluster     = module.compute.pm4_ecs_cluster
+  pm4_web_subnet_a    = module.compute.pm4_web_subnet_a
+  pm4_web_subnet_b    = module.compute.pm4_web_subnet_b
+  pm4_web_sg          = module.compute.pm4_web_sg
+  fs_efs              = module.compute.fs_efs
+  pm4_alb             = module.compute.pm4_alb
+  stm_tg              = module.compute.stm_tg
   pm4_secure_listener = module.compute.pm4_secure_listener
 }

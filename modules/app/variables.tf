@@ -6,3 +6,4 @@ variable "fs_efs" {}
 variable "pm4_alb" {}
 variable "stm_tg" {}
 variable "pm4_secure_listener" {}
+variable "pm4_client_name" {}

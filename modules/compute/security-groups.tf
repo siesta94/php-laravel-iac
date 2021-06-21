@@ -14,6 +14,12 @@ resource "aws_security_group" "pm4_redis_sg" {
 
     security_groups = [aws_security_group.pm4_tasks_sg.id, aws_security_group.pm4_web_sg.id]
   }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   tags = {
     Name = "PM4-${var.pm4_client_name}-Redis-SG"
@@ -151,6 +157,12 @@ resource "aws_security_group" "pm4_alb_sg" {
     to_port   = 80
     protocol  = "tcp"
 
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
