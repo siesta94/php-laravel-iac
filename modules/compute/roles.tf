@@ -1,5 +1,5 @@
 resource "aws_iam_role" "ecs_ec2_role" {
-  name               = "ecsInstanceRole"
+  name               = "PM4-${var.pm4_client_name}-ecsInstanceRole"
   assume_role_policy = file("${path.module}/policies/ecs-ec2-role.json")
   tags = {
     Name = "PM4-${var.pm4_client_name}-ecsInstanceRole"

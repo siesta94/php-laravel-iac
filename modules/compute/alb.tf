@@ -18,19 +18,19 @@ resource "aws_lb" "pm4_alb" {
   }
 }
 
-resource "aws_lb_target_group" "stm_tg" {
-  name     = "PM4-${var.pm4_client_name}-STM-TG"
+resource "aws_lb_target_group" "pm4_tg" {
+  name     = "PM4-${var.pm4_client_name}-PM4-TG"
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.pm4_client_vpc.id
 
   health_check {
-    path = "/"
-    healthy_threshold = 5
+    path                = "/"
+    healthy_threshold   = 5
     unhealthy_threshold = 2
-    timeout = 5
-    interval = 30
-    matcher = "200-302"  # has to be HTTP 200 or fails
+    timeout             = 5
+    interval            = 30
+    matcher             = "200-302" # has to be HTTP 200 or fails
   }
 }
 
@@ -66,17 +66,17 @@ resource "aws_lb_listener" "pm4_secure_listener" {
   }
 }
 
-resource "aws_lb_listener_rule" "stm_app_rule" {
+resource "aws_lb_listener_rule" "pm4_app_rule" {
   listener_arn = aws_lb_listener.pm4_secure_listener.arn
 
   action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.stm_tg.arn
+    target_group_arn = aws_lb_target_group.pm4_tg.arn
   }
 
   condition {
     host_header {
-      values = ["stm.strale-test.processmaker.net"]
+      values = ["strale-test.processmaker.net"]
     }
   }
 }

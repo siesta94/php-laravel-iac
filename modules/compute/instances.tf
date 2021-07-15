@@ -72,20 +72,11 @@ resource "aws_eip" "nat_eip_b" {
 #Generate and write in file key for NAT instances#
 ##################################################
 
-#resource "tls_private_key" "nat_key" {
-#  algorithm = "RSA"
-#}
+resource "aws_key_pair" "pm4_nat_key" {
+  key_name   = "pm4_nat_key"
+  public_key = var.nat_key
 
-#resource "aws_key_pair" "pm4_nat_key" {
-#  key_name   = "pm4_nat_key"
-  #public_key = var.nat_key
-#  public_key = tls_private_key.nat_key.public_key_openssh
-#
-#  provisioner "local-exec" { # Create "myKey.pem" to your computer!!
-#    command = "echo '${tls_private_key.nat_key.private_key_pem}' > ./nat_key.pem"
-#  }
-
-#  tags = {
-#    Name = "PM4-${var.pm4_client_name}-NAT-Key"
-#  }
-#}
+  tags = {
+    Name = "PM4-${var.pm4_client_name}-NAT-Key"
+  }
+}

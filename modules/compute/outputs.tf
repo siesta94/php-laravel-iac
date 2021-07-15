@@ -28,8 +28,8 @@ output "fs_efs" {
   description = "EFS Information for Service"
 }
 
-output "stm_tg" {
-  value       = aws_lb_target_group.stm_tg
+output "pm4_tg" {
+  value       = aws_lb_target_group.pm4_tg
   description = "TG for STM service"
 }
 

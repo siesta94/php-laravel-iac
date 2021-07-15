@@ -4,6 +4,7 @@ variable "pm4_web_subnet_b" {}
 variable "pm4_ecs_cluster" {}
 variable "fs_efs" {}
 variable "pm4_alb" {}
-variable "stm_tg" {}
+variable "pm4_tg" {}
 variable "pm4_secure_listener" {}
 variable "pm4_client_name" {}
+variable "pm4_container_image" {}

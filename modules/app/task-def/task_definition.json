@@ -1,25 +1,37 @@
-[
-  {
-    "name": "stm-app",
-    "image": "nginx:latest",
-    "essential": true,
-    "portMappings": [
-      {
-          "hostPort": 0,
-          "protocol": "tcp",
-          "containerPort": 80
-      }
-    ],
-    "cpu": 1,
-    "ulimits": [
-      {
-        "name": "nofile",
-        "softLimit": 65536,
-        "hardLimit": 65536
-      }
-    ],
-    "mountPoints": [],
-    "memory": 2048,
-    "volumesFrom": []
-  }
-]
+[{
+            "name": "pm4-app",
+            "image": "siesta94/laravel-app:latest",
+            "memory": 2048,
+            "resourceRequirements": null,
+            "essential": true,
+            "portMappings": [
+                {
+                    "hostPort": 0,
+                    "containerPort": 80,
+                    "protocol": "tcp"
+                }
+            ],
+            "environment": [
+                {
+                    "name": "WORKSPACE",
+                    "value": "test"
+                }
+            ],
+            "environmentFiles": [],
+            "secrets": null,
+            "mountPoints": [
+                {
+                    "sourceVolume": "EFS",
+                    "containerPath": "/mnt/efs"
+                }
+            ],
+            "volumesFrom": null,
+            "hostname": null,
+            "user": null,
+            "workingDirectory": null,
+            "extraHosts": null,
+            "logConfiguration": null,
+            "ulimits": null,
+            "dockerLabels": null,
+            "dependsOn": null
+}]

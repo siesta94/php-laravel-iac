@@ -1,4 +1,4 @@
-output "stm_service" {
-  value = aws_ecs_service.stm_service 
+output "pm4_service" {
+  value = aws_ecs_service.pm4_service 
   description = "ECS Service for TG attachment"
 }
