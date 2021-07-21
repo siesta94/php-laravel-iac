@@ -1,3 +1,7 @@
+##############
+#Creating ALB#
+##############
+
 resource "aws_lb" "pm4_alb" {
   name               = "PM4-${var.pm4_client_name}-ALB"
   internal           = false
@@ -18,6 +22,10 @@ resource "aws_lb" "pm4_alb" {
   }
 }
 
+##############################################
+#Creating default TargetGroup for Application#
+##############################################
+
 resource "aws_lb_target_group" "pm4_tg" {
   name     = "PM4-${var.pm4_client_name}-PM4-TG"
   port     = 80
@@ -33,6 +41,10 @@ resource "aws_lb_target_group" "pm4_tg" {
     matcher             = "200-302" # has to be HTTP 200 or fails
   }
 }
+
+####################
+#Creating Listeners#
+####################
 
 resource "aws_lb_listener" "pm4_unsecure_listener" {
   load_balancer_arn = aws_lb.pm4_alb.arn

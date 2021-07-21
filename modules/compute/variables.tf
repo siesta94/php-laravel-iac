@@ -12,3 +12,5 @@ variable "tasks_instance_ami" {}
 variable "tasks_instance_type" {}
 variable "rds_instance_type" {}
 variable "pm4_service" {}
+variable "rds_username" {}
+variable "rds_password" {}
