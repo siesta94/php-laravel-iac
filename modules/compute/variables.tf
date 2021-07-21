@@ -14,3 +14,4 @@ variable "rds_instance_type" {}
 variable "pm4_service" {}
 variable "rds_username" {}
 variable "rds_password" {}
+variable "redis_node_type" {}

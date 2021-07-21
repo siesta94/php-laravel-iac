@@ -29,9 +29,10 @@ module "compute" {
   tasks_instance_ami  = "ami-01b1183971574bcde"
   tasks_instance_type = "t3a.medium"
   rds_instance_type   = "db.t3.small"
-  rds_username = "RDSProdMaster"
-  rds_password = "choo3Nai0aewah4a"
+  rds_username        = "RDSProdMaster"
+  rds_password        = "choo3Nai0aewah4a"
   pm4_service         = module.app.pm4_service
+  redis_node_type     = "cache.t3.medium"
 }
 
 module "app" {

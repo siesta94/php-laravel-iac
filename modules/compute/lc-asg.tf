@@ -13,11 +13,7 @@ resource "aws_launch_configuration" "ecs_lc" {
 
 #!/bin/bash
 mkdir /mnt/efs
-echo "${aws_efs_file_system.fs_efs.id}:/ /mnt/efs efs _netdev 0 0" >> /etc/fstab
-sleep 30s
 echo ECS_CLUSTER=PM4-${var.pm4_client_name}-ECS >> /etc/ecs/ecs.config
-mount -a
-df -h | grep "/mnt/efs" >> /var/log/mount.log
 EOF
 
   lifecycle {
@@ -33,12 +29,12 @@ resource "aws_autoscaling_group" "ecs_asg" {
   max_size             = 4
 
   vpc_zone_identifier = [aws_subnet.pm4_web_a.id, aws_subnet.pm4_web_b.id]
-  
+
   tags = [{
-	key = "Name"
-	value = "PM4-${var.pm4_client_name}-ECS-WEB"
-        propagate_at_launch = true
-  },]
+    key                 = "Name"
+    value               = "PM4-${var.pm4_client_name}-ECS-WEB"
+    propagate_at_launch = true
+  }, ]
 
   lifecycle {
     create_before_destroy = true
@@ -60,7 +56,7 @@ resource "aws_launch_configuration" "workers_lc" {
 #!/bin/bash
 mkdir /mnt/efs
 echo "${aws_efs_file_system.fs_efs.id}:/ /mnt/efs efs _netdev 0 0" >> /etc/fstab
-mount /mnt/efs
+mount -a
 EOF
 
   lifecycle {
@@ -78,10 +74,10 @@ resource "aws_autoscaling_group" "workers_asg" {
   vpc_zone_identifier = [aws_subnet.pm4_tasks_a.id, aws_subnet.pm4_tasks_b.id]
 
   tags = [{
-        key = "Name"
-        value = "PM4-${var.pm4_client_name}-Worker"
-        propagate_at_launch = true
-  },]
+    key                 = "Name"
+    value               = "PM4-${var.pm4_client_name}-Worker"
+    propagate_at_launch = true
+  }, ]
 
   lifecycle {
     create_before_destroy = true
