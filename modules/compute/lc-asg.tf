@@ -8,7 +8,17 @@ resource "aws_launch_configuration" "ecs_lc" {
   iam_instance_profile = aws_iam_instance_profile.ecs_ec2_role.name
   security_groups      = [aws_security_group.pm4_web_sg.id]
   key_name             = aws_key_pair.pm4_nat_key.id
-  user_data            = "#!/bin/bash\necho ECS_CLUSTER=PM4-example-ECS >> /etc/ecs/ecs.config"
+
+  user_data = <<EOF
+
+#!/bin/bash
+mkdir /mnt/efs
+echo "${aws_efs_file_system.fs_efs.id}:/ /mnt/efs efs _netdev 0 0" >> /etc/fstab
+sleep 30s
+echo ECS_CLUSTER=PM4-${var.pm4_client_name}-ECS >> /etc/ecs/ecs.config
+mount -a
+df -h | grep "/mnt/efs" >> /var/log/mount.log
+EOF
 
   lifecycle {
     create_before_destroy = true
@@ -24,11 +34,11 @@ resource "aws_autoscaling_group" "ecs_asg" {
 
   vpc_zone_identifier = [aws_subnet.pm4_web_a.id, aws_subnet.pm4_web_b.id]
   
-  tag {
-	key = "name"
+  tags = [{
+	key = "Name"
 	value = "PM4-${var.pm4_client_name}-ECS-WEB"
         propagate_at_launch = true
-  }
+  },]
 
   lifecycle {
     create_before_destroy = true
@@ -45,6 +55,14 @@ resource "aws_launch_configuration" "workers_lc" {
   security_groups = [aws_security_group.pm4_tasks_sg.id]
   key_name        = aws_key_pair.pm4_nat_key.id
 
+  user_data = <<EOF
+
+#!/bin/bash
+mkdir /mnt/efs
+echo "${aws_efs_file_system.fs_efs.id}:/ /mnt/efs efs _netdev 0 0" >> /etc/fstab
+mount /mnt/efs
+EOF
+
   lifecycle {
     create_before_destroy = true
   }
@@ -59,11 +77,11 @@ resource "aws_autoscaling_group" "workers_asg" {
 
   vpc_zone_identifier = [aws_subnet.pm4_tasks_a.id, aws_subnet.pm4_tasks_b.id]
 
-  tag {
-        key = "name"
+  tags = [{
+        key = "Name"
         value = "PM4-${var.pm4_client_name}-Worker"
         propagate_at_launch = true
-  }
+  },]
 
   lifecycle {
     create_before_destroy = true

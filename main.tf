@@ -22,12 +22,12 @@ module "compute" {
     pm4_backend_b  = "10.0.16.0/24"
   }
   nat_ami             = "ami-00a9d4a05375b2763"
-  nat_instance_type   = "t3.medium"
+  nat_instance_type   = "t3a.micro"
   nat_key             = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDJ43kXcr+Wn9IbUoIAJgmgIDCC+xb69nM4w/Zz4PkRDFlBwGRzS5ZnOdvh1JznqVAGrwGsGQ4ydMpvsmvnuot2G6qRSvK3mz7KSGyEkomXI3lz8AKlmSS8U5GOgP0DYHKtfOVfqGYRUSW5hrWogBY+aJb1d8SGtJOe8Qpaw2rAGT4ZjqZKZqSY3dCa/nwxN6C2ymwbHj5ieSTRGD9PUHsD3gGRHDV7Dgwxyh/AlQZFgcBg/FQf8l/gj1QqiPRC3k+kWNmcKwiM48fuSwj7v2bUNCo5nSE5maQuNymqEl02BauPLFlY3OE24QWoFyxI4ehzdgNmzWJRvs/UwoXUJlxzjLX7UVw6YuH3QKQv7ksSAXHxabpen+NU61JIQVfptFIuaH17xuHuSXkdPuxvCNwDvrzosIONK3VtTwzJe2f4A28W8GaYlIxweV919mgK1U3/0StdYystKUbuVoRkisSSPNuVz9NWjMlQYQdwjEdPFYXzahGmOw6pF86mNvkaM/E= root@linuxws"
   ecs_instance_ami    = "ami-0ae3143bc8c29507d"
-  ecs_instance_type   = "t3.medium"
+  ecs_instance_type   = "t3a.medium"
   tasks_instance_ami  = "ami-01b1183971574bcde"
-  tasks_instance_type = "t3.medium"
+  tasks_instance_type = "t3a.medium"
   rds_instance_type   = "db.t3.small"
   pm4_service         = module.app.pm4_service
 }
