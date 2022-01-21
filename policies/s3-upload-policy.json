@@ -1,0 +1,19 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Resource": [
+                "arn:aws:s3:::k8s-configuration-bucket-1994",
+                "arn:aws:s3:::k8s-configuration-bucket-1994/*"
+            ],
+            "Effect": "Allow",
+            "Action": [
+                "s3:DeleteObject",
+                "s3:GetBucketLocation",
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:PutObject"
+            ]
+        }
+    ]
+}
